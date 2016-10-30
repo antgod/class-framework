@@ -1,4 +1,4 @@
-var fs = require('fs')
+import fs from 'fs'
 const config = {
 	text: '节点1',
 	children: [

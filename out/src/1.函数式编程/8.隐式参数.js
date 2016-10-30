@@ -44,42 +44,32 @@
 /* 0 */
 /***/ function(module, exports) {
 
-	// Currying
-	// 柯里化，将一个接收多个参数的函数转化为单参数函数的方式，转化后的函数每次只接收一个参数，然后返回一个新函数，
-	// 新函数可以继续接收参数，直到接收到所有的参数：
-
+	// Point-Free Style
+	// point-free style 是一种不显式向函数传递参数的代码风格，通常需要柯里化和高阶函数来实现
 	"use strict";
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var compute = function compute(sign) {
-	  return function () {
-	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	      args[_key] = arguments[_key];
-	    }
-
-	    return args.reduce(function (last, next) {
-	      return eval("" + last + sign + next);
-	    });
+	var map = function map(fn) {
+	  return function (list) {
+	    return list.map(fn);
+	  };
+	};
+	var add = function add(a) {
+	  return function (b) {
+	    return a + b;
 	  };
 	};
 
-	console.log(compute("+")(1, 2, 3, 4, 5));
-	console.log(compute("-")(1, 2, 3, 4, 5));
-	console.log(compute("*")(1, 2, 3, 4, 5));
-	console.log(compute("/")(1, 2, 3, 4, 5));
-
-	var node = new Object();
-
-	var props = { type: 'input', value: '123' };
-
-	var compose = function compose(node) {
-	  return function (props) {
-	    return _extends({}, node, props);
-	  };
+	// Not points-free
+	// numbers 是一个显式传递的参数
+	var incrementAll = function incrementAll(numbers) {
+	  return map(add(1))(numbers);
 	};
+	console.log(incrementAll([1, 2, 3]));
 
-	console.log(compose(node)(props));
+	// Points-free
+	// add(1) 的返回值隐式传递给了 map，作为 map 的 list 参数
+	var incrementAll2 = map(add(1));
+	console.log(incrementAll2([1, 2, 3]));
 
 /***/ }
 /******/ ]);

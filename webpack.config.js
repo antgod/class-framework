@@ -23,6 +23,9 @@ module.exports = {
     path: './out',
     filename: "[name].js"
   },
+  node: {
+    fs: "empty"
+  },
   module: {
     loaders: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/}

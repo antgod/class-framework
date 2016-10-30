@@ -42,44 +42,44 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _fs = __webpack_require__(1);
+
+	var _fs2 = _interopRequireDefault(_fs);
+
+	var config = {
+		text: '节点1',
+		children: [{
+			text: '节点1-1',
+			children: [{
+				text: '节点1-1-1',
+				children: []
+			}]
+		}, {
+			text: '节点2'
+		}]
+	};
+
+	var renderTree = function renderTree(leaf, path) {
+		var subLeafs = leaf.children ? leaf.children.map(function (subLeaf, i) {
+			var subPath = [path, 'children', i].join('.');
+			return renderTree(leaf.children[i], subPath);
+		}).join('') : '';
+		return '\n\t\t<li class="node">\n\t\t\t<a href="#">' + leaf.text + '(' + path + ')</a>\n\t\t\t<ul>\n\t\t\t\t' + subLeafs + '\n\t\t\t</ul>\n\t\t</li>\n\t';
+	};
+
+	_fs2['default'].writeFileSync('./tree.html', '<!DOCTYPE html>\n\t\t<html lang="en">\n\t\t\t<head>\n      \t<meta charset="UTF-8">                \n\t\t\t</head>                                      \n\t\t\t<body>\n\t\t\t\t<ul class="tree">\n\t\t\t\t\t' + renderTree(config, 'config') + '\n\t\t\t\t</ul>\n\t\t\t</body>\n\t\t</html>');
+
+/***/ },
+/* 1 */
 /***/ function(module, exports) {
 
-	// Currying
-	// 柯里化，将一个接收多个参数的函数转化为单参数函数的方式，转化后的函数每次只接收一个参数，然后返回一个新函数，
-	// 新函数可以继续接收参数，直到接收到所有的参数：
-
-	"use strict";
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var compute = function compute(sign) {
-	  return function () {
-	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	      args[_key] = arguments[_key];
-	    }
-
-	    return args.reduce(function (last, next) {
-	      return eval("" + last + sign + next);
-	    });
-	  };
-	};
-
-	console.log(compute("+")(1, 2, 3, 4, 5));
-	console.log(compute("-")(1, 2, 3, 4, 5));
-	console.log(compute("*")(1, 2, 3, 4, 5));
-	console.log(compute("/")(1, 2, 3, 4, 5));
-
-	var node = new Object();
-
-	var props = { type: 'input', value: '123' };
-
-	var compose = function compose(node) {
-	  return function (props) {
-	    return _extends({}, node, props);
-	  };
-	};
-
-	console.log(compose(node)(props));
+	
 
 /***/ }
 /******/ ]);

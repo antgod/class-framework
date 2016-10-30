@@ -1,9 +1,9 @@
 // Functor
 // functor 都拥有 map函数，并且在执行 map之后会返回一个新的 functor
-[1, 2, 3].map(x => x);
+[1, 2, 3].map(x => x)
 
-const f = x => x + 1;
-const g = x => x * 2;
+const f = x => x + 1
+const g = x => x * 2
 
 console.log([1, 2, 3].map(x => f(g(x))))
 

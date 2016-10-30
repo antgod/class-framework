@@ -44,42 +44,11 @@
 /* 0 */
 /***/ function(module, exports) {
 
-	// Currying
-	// 柯里化，将一个接收多个参数的函数转化为单参数函数的方式，转化后的函数每次只接收一个参数，然后返回一个新函数，
-	// 新函数可以继续接收参数，直到接收到所有的参数：
-
 	"use strict";
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var compute = function compute(sign) {
-	  return function () {
-	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	      args[_key] = arguments[_key];
-	    }
-
-	    return args.reduce(function (last, next) {
-	      return eval("" + last + sign + next);
-	    });
-	  };
-	};
-
-	console.log(compute("+")(1, 2, 3, 4, 5));
-	console.log(compute("-")(1, 2, 3, 4, 5));
-	console.log(compute("*")(1, 2, 3, 4, 5));
-	console.log(compute("/")(1, 2, 3, 4, 5));
-
-	var node = new Object();
-
-	var props = { type: 'input', value: '123' };
-
-	var compose = function compose(node) {
-	  return function (props) {
-	    return _extends({}, node, props);
-	  };
-	};
-
-	console.log(compose(node)(props));
+	/**
+	 * Created by lihongji on 16/10/15.
+	 */
 
 /***/ }
 /******/ ]);

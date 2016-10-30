@@ -9,14 +9,10 @@ console.log(compute("-")(1,2,3,4,5))
 console.log(compute("*")(1,2,3,4,5))
 console.log(compute("/")(1,2,3,4,5))
 
-const node = new Object()const node = new Object()
+const node = new Object()
 
 const props = {type:'input',value:'123'}
 
-const compose = node => props => ({...node,...props})
-
-console.log(compose(node)(props))
-const props = {type:'input',value:'123'}
 const compose = node => props => ({...node,...props})
 
 console.log(compose(node)(props))

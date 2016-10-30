@@ -44,42 +44,32 @@
 /* 0 */
 /***/ function(module, exports) {
 
-	// Currying
-	// 柯里化，将一个接收多个参数的函数转化为单参数函数的方式，转化后的函数每次只接收一个参数，然后返回一个新函数，
-	// 新函数可以继续接收参数，直到接收到所有的参数：
+	// Lift
+	// lift 发生在你将值放入 functor 的时候，如果你将函数 lift 进了 Applicative Functor，
+	// 那么就可以使用这个函数处理传递给这个 functor 的值。某些 lift 的实现拥有 lift 或 liftA2 函数，便于在 functor 上执行相关的函数：
 
 	"use strict";
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	var mult = function mult(a, b) {
+	  return a * b;
+	};
 
-	var compute = function compute(sign) {
+	var lift = function lift(fn) {
 	  return function () {
 	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
 	      args[_key] = arguments[_key];
 	    }
 
 	    return args.reduce(function (last, next) {
-	      return eval("" + last + sign + next);
-	    });
+	      return mult(last, next.reduce(function (last, next) {
+	        return mult(last, next);
+	      }, 1));
+	    }, 1);
 	  };
 	};
 
-	console.log(compute("+")(1, 2, 3, 4, 5));
-	console.log(compute("-")(1, 2, 3, 4, 5));
-	console.log(compute("*")(1, 2, 3, 4, 5));
-	console.log(compute("/")(1, 2, 3, 4, 5));
-
-	var node = new Object();
-
-	var props = { type: 'input', value: '123' };
-
-	var compose = function compose(node) {
-	  return function (props) {
-	    return _extends({}, node, props);
-	  };
-	};
-
-	console.log(compose(node)(props));
+	var liftedMult = lift(mult);
+	console.log(liftedMult([1, 2], [3], [4, 5]));
 
 /***/ }
 /******/ ]);
