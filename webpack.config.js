@@ -2,6 +2,7 @@ var webpack = require('webpack');
 var glob = require('glob');
 var fs = require('fs');
 var path = require('path');
+var babelpolyfill = require("babel-polyfill");
 
 const entries = globPath => {
   var files = glob.sync(globPath);
