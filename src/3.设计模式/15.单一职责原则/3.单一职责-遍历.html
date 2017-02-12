@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+//        我们有这样一段代码，先遍历一个集合，然后往页面中添加一些 div，这些 div 的 innerHTML分别对应集合里的元素：
+//        var appendDiv = function( data ){
+//            for ( var i = 0, l = data.length; i < l; i++ ){
+//                var div = document.createElement( 'div' );
+//                div.innerHTML = data[ i ];
+//                document.body.appendChild( div );
+//            }
+//        };
+//        appendDiv( [ 1, 2, 3, 4, 5, 6 ] );
+//        这其实是一段很常见的代码，经常用于 ajax 请求之后，在回调函数中遍历 ajax 请求返回的数据，然后在页面中渲染节点。
+
+        var isArrayLike=function(obj){
+            if(obj instanceof Array){
+                return true;
+            }else{
+                return false;
+            }
+        };
+
+        var each=function(obj,callback){
+            var i= 0,length=obj.length,isArray=isArrayLike(obj);
+            if(isArray){
+                for(;i<length;i++){
+                    callback.call(obj[i],obj[i],i);
+                }
+            }else{
+                for(i in obj){
+                    callback.call(obj[i],i,obj[i]);
+                }
+            }
+        };
+
+        var obj={
+            name:'lhj',
+            age:30
+        };
+
+        var arr=[1,2,3,4,5];
+
+        each(obj,function(key,value){
+            console.log(this,key,value);
+        });
+
+        each(arr,function(item,index){
+            console.log(this,item,index);
+        });
+
+
+
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

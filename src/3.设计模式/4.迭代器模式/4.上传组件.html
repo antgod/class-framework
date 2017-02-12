@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        var getActiveUploadObj=function(){
+           try{
+               return new ActiveXObject("TXFTNActiveX.FTNUpload");
+           }catch(e){
+               return false;
+           }
+        };
+
+        var getFlashUploadObj=function(){
+            var supportFlash=function(){
+                return false;
+            };
+            if(supportFlash()){
+                return true;     //模拟代码，真实代码改成object对象
+            }
+            return false;
+        };
+        var getFormUploadObj=function(){
+            var input=document.createElement("input");
+            input.type="file";
+            document.body.appendChild(input);
+            return input;
+        };
+
+        var getHtml5UploadObj=function(){
+            return false;        //具体代码略
+        };
+
+        iteratorUploadObj =function(){
+            for(var i in arguments){
+                var uploadObj=arguments[i]();
+                if(uploadObj!==false){
+                    return uploadObj;
+                }
+            }
+        };
+
+        window.onload=function(){
+            var uploadObj=iteratorUploadObj(getActiveUploadObj,getFlashUploadObj,
+                    getFormUploadObj,getHtml5UploadObj);
+            alert(uploadObj.nodeName);
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

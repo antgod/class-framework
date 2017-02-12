@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+</head>
+<body>
+</body>
+<script>
+//    上面的就是简单的惰性实例化的示例，但是有一点缺点就是需要使用中间量来调用内部的Configure函数所返回的对象的
+//    方法（当然也可以使用变量来储存myNamespace.getInstance()返回的实例对象）。将上面的代码稍微修改一下，就可
+//    以只用比较得体的方法来使用内部的方法和属性：
+    //惰性实例化的变体
+    var myNamespace2 = function(){
+        var Configure = function(){
+            var privateName = "someone's name";
+            var privateReturnName = function(){
+                return privateName;
+            };
+            var privateSetName = function(name){
+                privateName = name;
+            };
+            //返回单例对象
+            return {
+                setName:function(name){
+                    privateSetName(name);
+                },
+                getName:function(){
+                    return privateReturnName();
+                }
+            }
+        }
+        //储存configure的实例
+        var instance;
+        return {
+            init:function(){
+                //如果不存在实例，就创建单例实例
+                if(!instance){
+                    instance = Configure();
+                }
+                //将Configure创建的单例
+                for(var key in instance){
+                    if(instance.hasOwnProperty(key)){
+                        this[key]=instance[key];
+                    }
+                }
+                delete this.init;
+                return this;
+            }
+        }
+    }();
+    //使用方式：
+    myNamespace2.init();
+    console.log(myNamespace2.getName());
+</script>
+</html>

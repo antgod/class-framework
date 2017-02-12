@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+</head>
+<body>
+    <div id="test">test</div>
+</body>
+<script>
+    //惰性载入函数也是在函数内部改变自身的一种方式，这样之后，当重复执行的时候，就不会再进行兼容性方面的检测了。
+    var addEvent = function( elem, type, handler ){
+        if ( window.addEventListener ){
+            addEvent = function( elem, type, handler ){
+                elem.addEventListener( type, handler, false );
+            }
+        }else if ( window.attachEvent ){
+            addEvent = function( elem, type, handler ){
+                elem.attachEvent( 'on' + type, handler );
+            }
+        }
+        addEvent( elem, type, handler );
+    };
+
+    var div=document.querySelector("#test");
+
+    addEvent(div,"click",function(){
+        console.log(1);
+    });
+    addEvent(div,"click",function(){
+        console.log(2);
+    });
+
+</script>
+</html>

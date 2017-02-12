@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <script>
+        //如果小红心情不好，收到花的被扔掉的几率很大，只有小白了解小红，她可以监控小红的心情变化
+        //我们把花交给小白，让她去监控小红的心情好坏，当心情好的时候再送花
+        var Flower = function (name) {
+            this.name = name;
+        };
+
+        var Person = function (name) {
+            this.name = name;
+            this.flower = null;
+        };
+        Person.prototype.sendFlower = function (flower, target, turnSend, turnTarget) {
+            if (turnSend) {
+                target.receiveFlower(flower, turnTarget, turnSend);
+            } else {
+                target.receiveFlower(flower);
+            }
+
+            this.flower = null;
+        };
+
+        Person.prototype.receiveFlower = function (flower, target, turnSend) {
+            console.log(this.name + ":收到花-" + flower.name);
+            this.flower = flower;
+            if (turnSend) {
+                var t=setInterval(function(){
+                    var goodMood=this.listenGoodMood();
+                    if(!goodMood){
+                        clearInterval(t);
+                        console.log(this.name+":小红心情好，送她花");
+                        this.sendFlower(this.flower,target,false);
+                    }else{
+                        console.log(this.name+":小红心情不好，不送她花");
+                    }
+                }.bind(this),1000);
+
+            }
+        };
+
+        Person.prototype.listenGoodMood=function(fn){
+            var random=Math.floor(Math.random()*5);
+            return random;
+        };
+
+        var xiaoming = new Person("xiaoming");
+        var xiaobai = new Person("xiaobai");
+        var xiaohong = new Person("xiaohong");
+
+        var flower = new Flower("玫瑰");
+        xiaoming.sendFlower(flower, xiaobai,true,xiaohong);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+
+        var Perform=function(money){
+            this.money=money;
+        };
+
+        Perform.prototype.getAllMoney=function(){
+            return 12*this.money;
+        };
+
+        Function.prototype.extend=function(Parent){
+            var F=function(){};
+            F.prototype=Parent.prototype;
+            F.prototype.constuctor=F;
+            this.prototype= new F();
+        };
+
+        var S=function(num){
+            Perform.apply(this,arguments);
+        };
+
+        S.extend(Perform);
+
+        S.prototype.getAllPay=function(){
+            return this.getAllMoney()+6*this.money;
+        };
+
+        var C=function(num){
+            Perform.apply(this,arguments);
+        };
+
+        C.extend(Perform);
+
+        C.prototype.getAllPay=function(){
+            return this.getAllMoney()+2.6*this.money;
+        };
+
+        function Caculate(Func,num){
+            var func=new Func(num);
+            return func.getAllPay();
+        }
+
+        console.log(Caculate(C,15000))
+        console.log(Caculate(S,15000))
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

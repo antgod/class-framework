@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+</head>
+<body>
+     <button id="execute">open</button>
+     <button id="undo">close</button>
+</body>
+<script>
+    var tv={
+        open:function(){
+            console.log('opentv');
+        },
+        close:function(){
+            console.log('closetv');
+        }
+    };
+
+    function Controller(tv){
+        this.tv=tv;
+    }
+
+    Controller.prototype.open=function(){
+        this.tv.open();
+    };
+
+    Controller.prototype.close=function(){
+        this.tv.close();
+    };
+
+    var setCommand=function(command){
+        document.getElementById("execute").onclick=function(){
+            command.open();
+        };
+
+        document.getElementById("undo").onclick=function(){
+            command.close();
+        };
+    };
+    setCommand(new Controller(tv));
+</script>
+</html>

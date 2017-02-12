@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<body>
+<button tag="login" id="button">点击打开登录浮层</button>
+</body>
+<script>
+    Function.prototype.after = function (afterfn) {
+        var _this=this;
+        return function (){
+            var ret=_this.apply(this,arguments);
+            afterfn.apply(this,arguments);
+            return ret;
+        }
+    };
+    var showLogin = function () {
+        console.log('打开登录浮层',this);
+    };
+    var log = function () {
+        console.log('上报标签为: ' + this.getAttribute('tag'));
+
+    };
+
+    // 打开登录浮层之后上报数据
+    document.getElementById('button').onclick = showLogin.after(log);
+
+
+</script>
+</head>
+<body>
+
+</body>
+</html>

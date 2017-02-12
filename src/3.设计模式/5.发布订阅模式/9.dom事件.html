@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <button id="btn1">测试1</button>
+    <button id="btn2">测试2</button>
+</body>
+<script>
+    var Handler=(function(){
+        var _shift=[].shift,events='events';
+
+        var Event=function(){
+            this.cache=[];
+        };
+        Event.fn=Event.prototype={
+            constructor:Event,
+            on:function(){
+                var node=_shift.call(arguments),
+                    type=_shift.call(arguments),
+                    handler=_shift.call(arguments);
+
+                this.cache.push(node);
+                var nodeEvents=node[events]=node[events]||{};
+                nodeEvents[type]=nodeEvents[type]||[];
+                nodeEvents[type].push(handler);
+                node.addEventListener(type,handler,false);
+            },
+            query:function(){
+                var node=_shift.call(arguments),
+                    type=_shift.call(arguments);
+
+
+                if(!node){
+                    return this.cache;
+                }
+
+                var nodeEvents=node[events]||{};
+                if(node&&!type){
+                    return nodeEvents;
+                }else{
+                    return nodeEvents[type];
+                }
+            }
+        };
+
+        return new Event();
+    })();
+
+    var button1=document.getElementById('btn1');
+    Handler.on(button1,'click',function(ev){
+        alert(1);
+    });
+    var button2=document.getElementById('btn2');
+    Handler.on(button2,'click',function(ev){
+        alert(2);
+    });
+
+    console.dir(Handler.query());
+    console.dir(Handler.query(button1));
+    console.dir(Handler.query(button2,'click'));
+
+</script>
+</html>

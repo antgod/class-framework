@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width"/>
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <style>
+        #ball{
+            top: 50px;
+            left: 0;
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: red;
+            border-radius: 50%;
+            margin-bottom: 100px;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="ball"></div>
+请输入json格式样式(如：{"left":300,"top":"200","width":30,"height":30})：
+<input id="pos" />
+<button id="move">转换</button>
+<button id="undo">撤销</button>
+</body>
+<script>
+    var $ball=$("#ball");
+    var $pos=$("#pos");
+    var $move=$("#move");
+    var $undo=$("#undo");
+
+    var Handler=function(ele,type,handler){
+        ele.addEventListener(type,handler,false);
+    };
+
+    var MoveCommand=function(receivier,style,during){
+        this.recevier=receivier;
+        this.style=style||{};
+        this.oldStyle={};
+        this.during=during;
+    };
+
+    MoveCommand.prototype.execute=function(){
+        var style;
+        try{
+            style=JSON.parse(this.style);
+        }catch(e){
+            alert("请输入正确的json格式");
+            return ;
+        }
+
+        for(var i= 0,item=null;item=Object.keys(style)[i++];){
+            this.oldStyle[item]=getComputedStyle($ball.get(0))[item];
+        }
+
+        this.recevier.move.call(this.recevier.$dom,style,this.during);
+    };
+
+    MoveCommand.prototype.undo=function(){
+        this.recevier.move.call(this.recevier.$dom,this.oldStyle,this.during);
+    };
+
+    var Ball={
+        $dom:$ball,
+        move:function(style,speed){
+            this.animate(style,speed);
+        }
+    };
+
+    var moveCommand=null;
+    Handler($move.get(0),'click',function(){
+        moveCommand=new MoveCommand(Ball,$pos.val(),10000);
+        moveCommand.execute();
+    });
+    Handler($undo.get(0),'click',function(){
+        moveCommand.undo();
+    });
+</script>
+</html>

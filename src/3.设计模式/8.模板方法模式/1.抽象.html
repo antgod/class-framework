@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        var Beverage=function(){
+            console.log('把水煮沸');
+        };
+
+        Beverage.prototype={
+            a:function(){
+
+            },
+            b:function(){
+
+            },
+            c:function(){
+
+            },
+            init:function(){
+                this.a();
+                this.b();
+                this.c();
+            }
+        };
+
+        var Coffee=function(){};
+        Coffee.prototype=new Beverage();
+
+//        Coffee.prototype.a=function(){
+//            console.log("a");
+//        };
+//        Coffee.prototype.b=function(){
+//            console.log("b");
+//        };
+//        Coffee.prototype.c=function(){
+//            console.log("c");
+//        };
+                             e
+
+        var coffee=new Coffee();
+        coffee.init();
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+</body>
+<script>
+    //缺点：违反了单一职责链原则，myImage对象承担的职责过多，负责设置节点的src，又负责预加载图片。这种耦合导致脆弱的低内聚设计
+    //当变化发生时，会导致设计遭到意外的破坏
+
+    //缺点2：如果网速过快不需要预加载，我们必须修改myImage内部实现
+
+    //预加载只是井上添花的功能，如果把预加载放到另一个对象中，自然是非常好的选择，代理模式在这个时候凸显出来
+
+    var myImage = (function () {
+        var imgNode = document.createElement("img");
+        imgNode.style.cssText="width:400px;height:300px;";
+        document.body.appendChild(imgNode);
+
+        var img=new Image();
+        imgNode.onload=function(){
+            imgNode.src=img.src;
+        }
+
+        return {
+            setSrc: function (src) {
+                imgNode.src="loading.gif";
+                img.src = src;
+            }
+        }
+    })();
+
+    myImage.setSrc("http://img.shendu.com/forum/201402/27/1957260geqncmatbtzqmg6.jpg");
+
+</script>
+</html>

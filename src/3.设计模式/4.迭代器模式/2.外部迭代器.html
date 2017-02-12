@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        //某些没有闭包的语言中，迭代器实现起来相当复杂，比如c用指针实现迭代器，如下：
+        var Iterator=function(obj){
+            var current=0;
+            var next=function(){
+                current+=1;
+            };
+            var isDone=function(){
+                return current>=obj.length;
+            };
+
+            var getCurrItem=function(){
+                return obj[current];
+            };
+
+            return {
+                next:next,
+                isDone:isDone,
+                getCurrItem:getCurrItem
+            }
+        };
+
+        var compare=function(iterator1,iterator2) {
+            while (!(iterator1.isDone() && iterator2.isDone())) {
+                if (iterator1.getCurrItem() != iterator2.getCurrItem()) {
+                    return false;
+                }
+                iterator1.next();
+                iterator2.next();
+            }
+            return true;
+        };
+
+        var iterator1=Iterator([1,2]);
+        var iterator2=Iterator([1,2,3]);
+
+        alert(compare(iterator1,iterator2))
+    </script>
+</head>
+<body>
+
+</body>
+</html>

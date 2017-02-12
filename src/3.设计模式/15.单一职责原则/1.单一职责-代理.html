@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        var image=(function(){
+            var img=document.createElement('img');
+
+            return {
+                src:function(src){
+                    img.src=src;
+                }
+            }
+        })();
+
+        var proxy=(function(){
+            var proxyImage=new Image();
+            proxyImage.onload=function(){
+                image.src(this.src);
+            };
+
+            return {
+                src:function(src){
+                    proxyImage.src=src;
+                    image.src('loading.gif')
+                }
+            }
+        })();
+
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

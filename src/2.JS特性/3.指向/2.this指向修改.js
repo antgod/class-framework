@@ -1,0 +1,29 @@
+//报错，因为getElementById的this会指向document,而现在指向window
+//        var getById=document.getElementById;
+//        window.onload=function(){
+//            alert(getById("test").id);
+//        };
+
+//写法1:
+document.getElementById = (function() {
+  let d = document.getElementById;
+  return function() {
+    return d.apply(document, arguments)
+  };
+})();
+
+//写法2:
+document.getElementById = (function(func) {
+  let d = document.getElementById;
+  return function() {
+    return func.apply(document, arguments)
+  };
+})(document.getElementById);
+
+//写法3:
+document.getElementById = document.getElementById.bind(document);
+
+var getById = document.getElementById;
+window.onload = function() {
+  alert(getById("test").id);
+};
