@@ -27,4 +27,6 @@ promiseChain(
   cmd('git add .'),
   cmd('git commit -m '),
   cmd('git push origin master')
-);
+).then(()=>{
+  console.log('提交完毕');
+});
