@@ -1,4 +1,5 @@
 import "babel-polyfill";
+// 函数串联执行，上一个函数的返回值传递给下一个函数
 function compose(...funcs) {
   if (funcs.length === 0) {
     return arg => arg

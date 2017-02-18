@@ -1,6 +1,7 @@
+// 多函数选择路由操作
 function switcher(map) {
   return (arg) => {
-    const fn = map[arg.payload.type] || map.default
+    const fn = map[arg.payload.type] || map.default;
     if (fn) {
       return fn(arg)
     }

@@ -68,4 +68,4 @@ const close = wrapListenerWithMiddleware({
   createListenerMiddleware(concatWithPostMessage, listenPostMessageActions),
 ]);
 
-close['preview/loadPage']({payload: '随便写点参数'})
+close['preview/loadPage']({payload: '随便写点参数'});

@@ -1,5 +1,5 @@
 import "babel-polyfill";
-
+// 函数串联执行，参数相同
 function concat(...fns) {
   return payload => fns.forEach((fn) => {
     fn(payload)
