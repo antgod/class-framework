@@ -1,0 +1,11 @@
+{
+  "name": "applicative",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "babel": "babel src --out-dir lib -w"
+  },
+  "author": "",
+  "license": "ISC"
+}
