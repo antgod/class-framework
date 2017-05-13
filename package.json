@@ -16,6 +16,11 @@
     "react",
     "webpack"
   ],
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
+    "testFileExtensions": ["es6", "js"],
+    "moduleFileExtensions": ["js", "json", "es6"]
+  },
   "author": "yixuan",
   "devDependencies": {
     "babel-polyfill": "^6.20.0",
