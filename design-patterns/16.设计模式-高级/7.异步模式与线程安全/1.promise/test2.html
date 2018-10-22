@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="3.promise.js"></script>
+    <script>
+
+        var promise=new Promise();
+
+        promise.then(function(){
+            console.log("执行成功1",arguments);
+            return new Promise();
+        }).then(function(){
+            console.log("执行成功2",arguments);
+        });
+
+
+        //promise.resolve('回调数据');
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function Class(){
+            if(!(this instanceof Class)){
+                return new Class()
+            }
+        }
+
+        Class.prototype.get=function(){
+            console.log('get')
+        };
+
+        var clazz= Class();
+        clazz.get();
+    </script>
+</head>
+<body>
+
+</body>
+</html>

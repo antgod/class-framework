@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<script>
+    for(var i =0;i<5;i++){
+        (function(i){
+            setTimeout(function(){
+                console.log('闭包参数:'+i);
+            },100)
+        })(i)
+    }
+
+    for(var i =0;i<5;i++){
+        (function(){
+            var t=i;
+            setTimeout(function(){
+                console.log('闭包局部变量:'+t);
+            },100)
+        })()
+    }
+
+    for(var i =0;i<5;i++){
+        setTimeout(function(arg){
+            return function(){
+                console.log('闭包返回函数:'+arg);
+            }
+        }(i),100)
+    }
+
+    for(var i =0;i<5;i++){
+        setTimeout(new Function("console.log('new Function:'+"+i+");"),100);
+    }
+
+    for(var i =0;i<5;i++){
+        setTimeout(Function("console.log('Function:'+"+i+");"),100);
+    }
+
+</script>
+</body>
+</html>

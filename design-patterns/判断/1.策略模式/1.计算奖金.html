@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        //多个类只区别在表现行为不同，可以使用Strategy模式，在运行时动态选择具体要执行的行为。
+
+        //我们不愿意把太多的判断条件写到同一个方法内，此方法不容易扩展和维护
+        //此方法是框架中的计算方法，无法在外部扩展
+
+        //所以我们使用不同的策略类来扩展
+
+        function PerformancS(){}
+        PerformancS.prototype.calculate=function(salary){
+            return salary*0.4;
+        }
+
+        function PerformancA(){}
+        PerformancA.prototype.calculate=function(salary){
+            return salary*0.3;
+        };
+
+        function Bonus(salary){
+            this.salary=salary;
+            this.strategy=null;
+        }
+
+        Bonus.prototype.setStrategy=function(strategy){
+            this.strategy=strategy;
+        };
+
+        Bonus.prototype.getBonus=function(){
+            return this.strategy.calculate(this.salary);
+        };
+
+        var bonus=new Bonus(3000);
+        bonus.setStrategy(new PerformancS());
+
+        console.log(bonus.getBonus());
+
+        bonus.setStrategy(new PerformancA());
+
+        console.log(bonus.getBonus());
+    </script>
+</head>
+<body>
+
+</body>
+</html>

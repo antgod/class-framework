@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function Class(a,b,c){
+            return new Class.prototype.init(a,b,c);      //返回init返回值 = this
+        }
+
+        Class.prototype={
+            cache:[],
+
+            init:function(){
+                console.log(arguments);
+                return this;                        //this = new Class.prototype.init(),但是init上面没有其他函数,所以让init继承Class
+            },
+
+            toArray:function(){
+                return [].slice.call(arguments);
+            },
+
+            add:function(){
+                this.cache=this.cache.concat(this.toArray.apply(this,arguments));
+                return this;
+            },
+
+            get:function(index){                      //最终操作,无法返回链式操作
+                return index==null?
+                    //返回数组
+                        this.cache:
+                    //返回
+                        (
+                                index<0?
+                                    //返回
+                                        this.cache[this.cache.length-1+index] :
+                                    //返回查找项
+                                        this.cache[index]
+                        )
+            }
+        };
+
+        Class.prototype.init.prototype=Class.prototype;  //假继承
+
+        console.log(Class(1,2,3).add(1,2,3,4).get(3));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+
+        //1.apply最大的最用之一就是函数借调，修改this指向和传递参数
+
+        /*
+         * 计算函数
+         * params:要计算的数值
+         * */
+        var calculate = {
+            sum: function () {              //求和
+                var sum = 0;
+                for (var i = 0, item; item = arguments[i++];) {
+                    sum += item;
+                }
+                return sum;
+            },                           //求积
+            mult: function () {
+                var sum = 1;
+                for (var i = 0, item; item = arguments[i++];) {
+                    sum *= item;
+                }
+                return sum;
+            }
+        };
+
+        /*
+        * 计算数组函数，根据传入计算方式计算结果
+        * params:计算方式
+        * */
+        Array.prototype.mathOperate = (function () {
+            var cache = {};                                                        //这里对已经计算的值进行缓存
+            return function () {
+                var operate = [].shift.call(arguments);
+                var vals = [].join.call(this);
+                var key = operate.concat(vals);
+                if (cache[key]) {
+                    return cache[key];
+                } else {
+                    return cache[key] = calculate[operate].apply(arguments, this);   //我们借调了其他对象的函数
+                }
+            }
+        })();
+
+        alert([1, 2, 3, 4].mathOperate("sum"));
+        alert([1, 2, 3, 4].mathOperate("mult"));
+        alert([1, 2, 3, 4, 5].mathOperate("sum"));
+        alert([1, 2, 3, 4, 5].mathOperate("mult"));
+        alert([1, 2, 3, 4].mathOperate("sum"));                                      //第二次计算，从缓存中读取
+        alert([1, 2, 3, 4].mathOperate("mult"));                                     //第二次计算，从缓存中读取
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

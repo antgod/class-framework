@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        //函数颗粒化
+        var cost=(function(){
+            var args=[];
+
+            return function(){
+               if(!arguments.length){
+                   var money=0;
+                   args.forEach(function(item){
+                       money+=item;
+                   });
+                   return money;
+               }else{
+                   [].push.apply(args,arguments);
+               }
+            }
+        })();
+
+        cost(100,200);
+        cost(500);
+        cost(200);
+
+        alert(cost())
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        var guangdongCityJSON = {
+            shenzhen: 11,
+            guangzhou: 12,
+            zhuhai: 13
+        };
+
+        var guangdongCityArray=[
+            {
+                name: 'shenzhen',
+                id: 11,
+            }, {
+                name: 'guangzhou',
+                id: 12,
+            }
+        ];
+
+        var getGuangdongCity = function(){
+            return guangdongCityArray;
+        };
+        var render = function( fn ){
+            console.log( '开始渲染广东省地图' );
+            document.write( JSON.stringify( fn() ) );
+        };
+
+        var addressAdapter = function( oldAddressfn ){
+            var address = {},
+                oldAddress = oldAddressfn();
+            for ( var key in oldAddress ){
+                address[ key ] = oldAddress[key];
+            }
+            return function(){
+                return address;
+            }
+        };
+
+        render( addressAdapter(getGuangdongCity) );
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+
+        //创建数组函数
+        var createIterator=(function(){
+            var cache,shift=[].shift,DIMEN={
+                one:1,
+                two:2
+            };
+
+            function randomNumber(max){
+
+                return Math.floor(Math.random()*max);
+            }
+
+
+            return function(){
+                cache=[];
+                var len = shift.call(arguments);     //个数
+                var max = shift.call(arguments);     //最大值
+                var dimen = shift.call(arguments);   //维度
+
+                if(!len||!max||!dimen){
+                    throw new Error('必须传入3个参数')
+                }
+
+                if(dimen==DIMEN.one){
+                    while (len--){
+                        cache.push(randomNumber(max));
+                    }
+                    return cache;
+                }else if(dimen==DIMEN.two){
+                    var length= 2,templen=len;       //写死2行数据
+                    while (length--){
+                        var rows=[],len=templen;
+                        while (len--){
+                            rows.push(randomNumber(max));
+                        }
+                        cache.push(rows);
+                    }
+                    return cache;
+                }
+            }
+        })();
+
+
+
+        var array=createIterator(10,20,1);
+        var squareArray= createIterator(10,20,2);
+
+        console.log('一维数组',array);
+        console.log('二维数组',squareArray);
+
+        function merge(array){
+            var json={};
+
+            if(!(array instanceof Array)){
+                throw new TypeError('类型错误');
+            }
+
+            array.forEach(function(item){
+                json[item]=true;
+            });
+
+            return json;
+        }
+
+        var jsonArray=merge(array);
+
+        function calculate(callback){
+            if(typeof callback!='function')
+                throw new TypeError('请传入回调函数');
+
+            try {
+                for(var i= 0,row;row=squareArray[i++];){
+                    for(var j= 0,item;item=row[j++];){
+                        if(jsonArray[item]){
+                            callback(item,i,j);
+                        }
+                    }
+                }
+            }catch (e){
+                console.log(e.track)
+            }
+        }
+
+        calculate(function(item,row,col){
+            console.log('回调函数','项',item,'行',row,'列',col);
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

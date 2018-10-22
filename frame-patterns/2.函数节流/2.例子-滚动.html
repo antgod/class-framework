@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="//cdn.bootcss.com/zepto/1.0rc1/zepto.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <style>
+        html,
+        .body {
+            margin: 0;
+            height: 100%;
+        }
+
+        .main {
+            height: 100%;
+            background: #aaa;
+            overflow: auto;
+        }
+
+        .scroll-wrapper {
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            height: 50%;
+            background: #ccc;
+        }
+
+        .scroll-wrapper .scroll-button-wrapper {
+            height: 10%;
+        }
+
+        .scroll-wrapper .scroll-button-wrapper .scroll-button {
+            width: 200px;
+            text-align: center;
+            background: dimgray;
+            float: right;
+        }
+
+        .scroll-wrapper .scroll-side {
+            height: 90%;
+        }
+    </style>
+
+</head>
+
+<body class="body">
+    <div class="main">
+
+    </div>
+    <div class="scroll-wrapper">
+        <div class="scroll-button-wrapper">
+            <div class="scroll-button">滑动</div>
+        </div>
+        <div class="scroll-side">
+
+        </div>
+
+    </div>
+</body>
+
+<script>
+    var constVar = {
+        config: {
+            stopStep: 40
+        }
+    };
+    var EventHandler = {
+        touchmove: function () {
+            Proxy.throttle.apply(this, arguments);
+        },
+        scroll: function (opts) {
+            var touchX = opts.touchX || 0;
+            var touchY = opts.touchY || 0;
+
+            $(".scroll-wrapper").css({
+                "height": $(window).height() - touchY
+            })
+        }
+    };
+
+    $(".scroll-button").on("touchmove", EventHandler.touchmove);
+
+    var Proxy = (function () {
+        var timer = null, firstTime = true;
+        return {
+            throttle: function (ev) {
+                if (firstTime) {
+                    firstTime = false;
+                    Touch.move.apply(this, arguments);
+                } else if (!timer) {
+                    timer = window.setTimeout(Touch.move.bind(this, ev, function () {
+                        timer = null;
+                    }), constVar.config.stopStep);
+                }
+            }
+        }
+    })();
+
+    var Touch = (function () {
+        return {
+            move: function (ev, callback) {
+                var touches = ev.touches, touch;
+                if (touches && touches.length) {
+                    touch = touches[0];
+                    EventHandler.scroll.call(this, {
+                        touchX: touch.clientX,
+                        touchY: touch.clientY
+                    });
+                }
+                callback && callback();
+            }
+        }
+    })();
+
+</script>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        var googleMap = {
+            show: function(city){
+                console.log( `开始渲染谷歌地图,城市:${city}` );
+            }
+        };
+        var baiduMap = {
+            display: function(city){
+                console.log( `开始渲染百度地图,城市:${city}` );
+            }
+        };
+
+        var baiduAdapter={
+            show:function(){
+                return baiduMap.display.apply(this,arguments);
+            }
+        };
+
+        function renderMap(){
+            [].shift.call(arguments).show.apply(this,arguments);
+        }
+
+        renderMap(googleMap,'洛杉矶');
+        renderMap(baiduAdapter,'北京');
+
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

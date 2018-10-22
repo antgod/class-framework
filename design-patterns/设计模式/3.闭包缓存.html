@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        var Class=(function(){
+            var optionsCache={};
+
+            var createOptions=function(options){
+                return options.match(/\S+/g).map(function(item){
+                   var ret={};
+                   ret[item]=true;
+
+                   return ret;
+                });
+            };
+            var Class=function(options){
+                options = typeof options === "string" ?                  //如果参数为空
+                        ( optionsCache[ options ] || createOptions( options ) ) :     //否则从缓存中读取参数数组,或者新创建参数
+                        Object.assign( {}, options );                        //参数为{}
+
+                console.log("options",options);
+            };
+
+            return Class;
+        })();
+
+
+
+
+
+
+
+        Class("new memory");
+        Class("new");
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

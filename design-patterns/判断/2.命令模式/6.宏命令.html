@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width"/>
+</head>
+<body>
+</body>
+<script>
+    var openComputer={
+        execute:function(){
+            console.log("打开电脑");
+        }
+    };
+
+    var openQQ={
+        execute:function(){
+            console.log("打开QQ");
+        }
+    };
+
+    var MacroCommand=function(){
+        return {
+            commandList:[],
+            add:function(command){
+                this.commandList.push(command);
+            },
+            execute:function(){
+                for(var i= 0,command;command=this.commandList[i++];){
+                    command.execute();
+                }
+            }
+        }
+    };
+
+    var macroCommand=MacroCommand();
+    macroCommand.add(openComputer);
+    macroCommand.add(openQQ);
+
+    macroCommand.execute();
+
+</script>
+</html>

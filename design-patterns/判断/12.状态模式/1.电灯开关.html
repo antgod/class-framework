@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<script>
+    //        首先给出不用状态模式的电灯程序实现：
+    var Light = function(){
+        this.state = 'off'; // 给电灯设置初始状态 off
+        this.button = null; // 电灯开关按钮
+    };
+    //        接下来定义 Light.prototype.init 方法，该方法负责在页面中创建一个真实的 button 节点，
+    //        假设这个 button 就是电灯的开关按钮，当 button 的 onclick 事件被触发时，就是电灯开关被按下
+    //        的时候，代码如下：
+    Light.prototype.init = function(){
+        var button = document.createElement( 'button' ),
+                self = this;
+        button.innerHTML = '开关';
+        this.button = document.body.appendChild( button );
+        this.button.onclick = function(){
+            self.buttonWasPressed();
+        }
+    };
+    //        当开关被按下时，程序会调用 self.buttonWasPressed 方法， 开关按下之后的所有行为，都
+    //        将被封装在这个方法里，代码如下：
+    Light.prototype.buttonWasPressed = function(){
+        if ( this.state === 'off' ){
+            console.log( '开灯' );
+            this.state = 'on';
+        }else if ( this.state === 'on' ){
+            console.log( '关灯' );
+            this.state = 'off';
+        }
+    };
+    var light = new Light();
+    light.init();
+
+</script>
+</body>
+</html>

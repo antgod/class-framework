@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        //函数泛化
+        Function.prototype.uncurring=function(){
+            var self=this;
+            return function(){
+                var obj=[].shift.call(arguments);
+                return self.apply(obj,arguments);       //相对于：Array.prototype.push.apply(arguments,[4]);
+            }
+        };
+
+        var push=Array.prototype.push.uncurring();
+
+        function A(){
+            push(arguments,4);
+            alert([].slice.call(arguments));
+        }
+
+        A(1,2,3);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

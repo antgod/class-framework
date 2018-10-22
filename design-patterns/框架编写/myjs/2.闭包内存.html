@@ -1,0 +1,25 @@
+<meta charset='utf-8'/>
+<body>11111</body>
+<script>
+function main(){
+    var str = new Array(1000).join(new Array(5000).join("xxxxx"));
+
+	return function(){
+		var arr = [];
+		arr.push(str);
+		
+		return arr;
+	}
+}
+
+var other = main();
+var arr=other();
+
+//使用
+for(var i=0;i<3;i++){
+	//console.log(arr);				//使用，开销很大
+}
+//释放
+arr=null;	//释放不释放，内存占用区别不大
+other=null;
+</script>
