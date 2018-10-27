@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
@@ -11,30 +12,30 @@
 
         //所以我们使用不同的策略类来扩展
 
-        function PerformancS(){}
-        PerformancS.prototype.calculate=function(salary){
-            return salary*0.4;
+        function PerformancS() { }
+        PerformancS.prototype.calculate = function (salary) {
+            return salary * 0.4;
         }
 
-        function PerformancA(){}
-        PerformancA.prototype.calculate=function(salary){
-            return salary*0.3;
+        function PerformancA() { }
+        PerformancA.prototype.calculate = function (salary) {
+            return salary * 0.3;
         };
 
-        function Bonus(salary){
-            this.salary=salary;
-            this.strategy=null;
+        function Bonus(salary) {
+            this.salary = salary;
+            this.strategy = null;
         }
 
-        Bonus.prototype.setStrategy=function(strategy){
-            this.strategy=strategy;
+        Bonus.prototype.setStrategy = function (strategy) {
+            this.strategy = strategy;
         };
 
-        Bonus.prototype.getBonus=function(){
+        Bonus.prototype.getBonus = function () {
             return this.strategy.calculate(this.salary);
         };
 
-        var bonus=new Bonus(3000);
+        var bonus = new Bonus(3000);
         bonus.setStrategy(new PerformancS());
 
         console.log(bonus.getBonus());
@@ -44,7 +45,9 @@
         console.log(bonus.getBonus());
     </script>
 </head>
+
 <body>
 
 </body>
+
 </html>
