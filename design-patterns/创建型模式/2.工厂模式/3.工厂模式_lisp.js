@@ -1,4 +1,3 @@
-// 简单工厂存在一些问题，每次需求都要改变两处地方：1.创建相应的类 2.修改简单工厂的处理类
 const BasketBall = () => {
   return {
     say: () => console.log("I'm yaoming")

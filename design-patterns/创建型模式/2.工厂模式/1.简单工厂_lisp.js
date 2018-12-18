@@ -12,18 +12,18 @@ const FootBall = () => {
 
 // 简单工厂
 const FACTORY_LIB = {
-  worldCup: 'worldCup',
-  nba: 'nba'
+  WORLD_CUP: 'WORLD_CUP',
+  NBA: 'NBA'
 }
 
 // 创建类工厂
 function factory (type) {
-  if (type === FACTORY_LIB.worldCup) {
+  if (type === FACTORY_LIB.WORLD_CUP) {
     return BasketBall()
-  } else if (type === FACTORY_LIB.nba) {
+  } else if (type === FACTORY_LIB.NBA) {
     return FootBall()
   }
 }
 
-factory(FACTORY_LIB.worldCup).say()
-factory(FACTORY_LIB.nba).say()
+factory(FACTORY_LIB.WORLD_CUP).say()
+factory(FACTORY_LIB.NBA).say()
