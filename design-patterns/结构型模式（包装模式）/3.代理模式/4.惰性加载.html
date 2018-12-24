@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+  <script>
+    const listenersCreator = function() {
+      const events = [] 
+      return {
+        subscribe: (fn) => {
+          events.push(fn)
+        },
+        publish: () => {
+          events.forEach(event => event())
+        },
+      }
+    }
+
+    const listeners = listenersCreator()
+
+
+    // 模拟js请求2秒后返回，并且把myConsole挂载到全局
+    setTimeout(() => {
+      window.myConsole = () => {
+        return {
+          log: (...args) => {
+            console.log(args.join(','));
+          }
+        }
+      }  
+
+      listeners.publish()
+    }, 2000)
+
+    const loadMyConsole = (cache) => {
+      cache.forEach(fn => fn())
+    }
+
+    const myConsoleProxy = () => {
+      const cache = []
+      listeners.subscribe(() => {
+        cache.forEach(fn => fn())
+      })
+      return {
+        // 使用代理缓存下来所有log事件
+        log: function (...args) {
+          if(window.myConsole) {
+            myConsole().log(...args)
+          } else {
+            cache.push(() => {
+              myConsole().log(...args)
+            })
+          }
+        }
+      }
+    }
+
+    function clickButton(ev) {
+      const console = myConsoleProxy()
+      console.log(ev.target.innerHTML)
+    }
+  </script>
+</head>
+
+<body>
+  <button onclick="clickButton(event)">button</button>
+</body>
+
+</html>

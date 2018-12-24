@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+
+<body>
+</body>
+<script>
+  const RenderImage = (src) => {
+    var img = document.createElement("img");
+    document.body.appendChild(img);
+    img.style.height = "100vh"
+    return {
+      src: (src) => img.src = src
+    }
+  }
+
+  const LoadProxy = () => {
+    // 代理图片
+    const img = new Image();
+    const image = RenderImage()
+    return {
+      src: (src) => {
+        image.src('loading.gif')
+        img.src = src
+        img.onload = () => {
+          image.src(src)
+        }
+      }
+    }
+  } 
+
+  LoadProxy().src("http://lensbuyersguide.com/gallery/219/2/23_iso100_14mm.jpg");
+</script>
+
+</html>
