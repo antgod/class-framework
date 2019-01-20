@@ -1,0 +1,136 @@
+<body>
+	<h3>职责链模式:</h3>
+	<p>
+		解决请求的发送者和请求的接受者之间的耦合，通过职责链上的多个对象对分解请求流程，实现请求在多个对象之间的传递，直到最后一个对象完成请求的处理
+	</p>
+	<hr>
+	<div>
+		<input type="text" name="user1" value="1">
+		<input type="text" name="user2" value="2">
+		<ul>
+
+		</ul>
+		<span></span>
+	</div>
+	<script type="text/javascript">
+		/**
+		 *   案例一：，方式一：初始
+		 */
+		// 1、请求模块
+		/***
+		 *   异步请求对象（简化版本）
+		 *   参数 data     请求数据
+		 *   参数 dataType 响应数据处理对象
+		 *   参数 dom      事件源
+		 ****/
+		const sendData = function (data, dealType, dom) {
+			// XHR对象 简化版本 IE另行处理
+			const xhr = new XMLHttpRequest()
+			// 请求路径
+			const url = 'https://www.baidu.com'
+			// 请求返回事件
+			// xhr.onload = function (event) {
+			// 	// 请求成功
+			// 	debugger
+			// 	if ((xhr.status >= 200 && xhr.status <= 300) || xhr.status == 304) {
+			// 		dealData(xhr.responseText, dealType, dom)
+			// 	} else {
+			// 		console.log('请求失败')
+			// 	}
+			// 	// 拼接请求字符串
+			// 	for (const i in data) {
+			// 		url += '&' + i + '=' + data[i]
+			// 	}
+			// 	// 发送异步请求
+			// 	xhr.open('get', url, true)
+			// 	xhr.send(null)
+			// }
+			// 模拟发送请求
+			setTimeout(() => {
+				dealData(['后端返回数据1', '后端返回数据2'], dealType, dom)
+			}, 100)
+		}
+		// 2、响应数据适配模块
+		/***
+		 *   处理响应数据
+		 *   参数 data     请求数据
+		 *   参数 dataType 响应数据处理对象
+		 *   参数 dom      事件源
+		 ****/
+		const dealData = function (data, dealType, dom) {
+			// 对象toString方法简化引用
+			const dataType = Object.prototype.toString.call(data)
+			// 判断相应数据处理对象
+			switch (dealType) {
+				case 'sug':
+					console.log('sug===============', dataType)
+					// 如果数据为数组
+					if (dataType === '[object Array]') {
+						// 创建提示框组件
+						return createSug(data, dom)
+					}
+					// 将相应的对象数据转化为数组
+					if (dataType === '[object Object]') {
+						const newData = []
+						for (const i in data) {
+							newData.push(data[i])
+						}
+						// 创建提示框组件
+						return createSug(newData, dom)
+					}
+					// 将响应的其他数据转化为数组
+					return createSug([data], dom)
+					break
+				case 'validate':
+					// 创建校验组件
+					return createValidateResult(data, dom)
+					break
+			}
+		}
+		// 3、创建组件模块
+		/***
+		 *   创建提示框组件
+		 *   参数 data     请求数据
+		 *   参数 dom      事件源
+		 ****/
+		const createSug = function (data, dom) {
+			const i = 0
+			const len = data.length
+			let html = ''
+			// 拼接每一条语句
+			data.forEach(item => html += '<li>' + item + '</li>')
+			// 显示提示框
+			dom.parentNode.getElementsByTagName('ul')[0].innerHTML = html
+		}
+		const createValidateResult = function (data, dom) {
+			// 显示校验结果
+			dom.parentNode.getElementsByTagName('span')[0].innerHTML = data
+		}
+
+		/****
+		 *   单元测试
+		 ****/
+		// 模拟数据
+		const _inputs = document.getElementsByTagName('input')
+		// dealData('用户名不正确', 'validate', _inputs[0])
+		// dealData({
+		// 	'iqy': '爱奇艺',
+		// 	'albb': '阿里巴巴',
+		// 	'imh': '爱漫画'
+		// }, 'sug', _inputs[1])
+
+		// 事件
+		_inputs[0].onchange = function (e) {
+			console.log('触发了onchange事件')
+			sendData({
+				value: _inputs[0].value
+			}, 'validate', _inputs[0])
+		}
+		_inputs[1].onkeydown = function (e) {
+			console.log('触发了onkeydown事件')
+			sendData({
+				value: _inputs[1].value
+			}, 'sug', _inputs[1])
+		}
+	</script>
+</body>
