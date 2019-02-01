@@ -19,3 +19,35 @@
 - 观察者模式大多数时候是同步的，比如当事件触发，Subject就会去调用观察者的方法。而发布-订阅模式大多数时候是异步的（使用消息队列）。
 
 - 观察者 模式需要在单个应用程序地址空间中实现，而发布-订阅更像交叉应用模式。
+
+
+## 在写法上的区别
+- 观察者
+  dom.addEventListener('click', function() {
+
+	})
+
+	dom即为观察者，而Subject则为webkit执行器本身，当Subject接受到用户点击行为，便会notify通知观察者执行回调事件。而subject本身并不存储回调函数。
+
+
+- 发布订阅
+```
+	// 模块1
+	(function () {
+		var count = 0;
+		btn.onclick = function () {
+			count++;
+			Event.trigger("clickBtn", count);
+		}
+	})();
+
+	// 模块2
+	(function () {
+		Event.listen("clickBtn", function (count) {
+			display.innerHTML = count;
+		})
+	})();
+```
+
+模块2为订阅者，模块1为发布者。当然，他们可以互换。
+
